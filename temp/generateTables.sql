@@ -5,8 +5,8 @@ CREATE TABLE Destinations (
 );
 
 CREATE TABLE Destination_Tag
-	Name, FOREIGN_KEY
-	TagID, FOREIGN_KEY
+	Name char(255) FOREIGN_KEY,
+	TagID smallint FOREIGN_KEY
 
 CREATE TABLE Tags (
 	TagID smallint PRIMARY_KEY,
