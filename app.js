@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mysql = require('mysql');
+var Promise = require('promise');
 
 
 var indexRouter = require('./routes/index');
@@ -19,8 +20,11 @@ var corsOptions = {
 };
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'pug');
+
+app.use(express.static('front_end'));
+
 
 app.use(cors(corsOptions));
 app.use(logger('dev'));
