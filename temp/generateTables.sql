@@ -16,6 +16,10 @@ CREATE TABLE Tags (
 
 INSERT INTO Destinations VALUES ('Alaska', 'alaska.jpg', 'Alaska, USA');
 
+INSERT INTO Destination_Tag VALUES ('Alaska', 13);
+INSERT INTO Destination_Tag VALUES ('Alaska', 5);
+INSERT INTO Destination_Tag VALUES ('Alaska', 7);
+
 INSERT INTO Tags VALUES (0, 'Urban');
 INSERT INTO Tags VALUES (1, 'Rural');
 INSERT INTO Tags VALUES (2, 'Vista');
@@ -27,7 +31,7 @@ INSERT INTO Tags VALUES (7, 'Snow');
 INSERT INTO Tags VALUES (8, 'Mountainous');
 INSERT INTO Tags VALUES (9, 'Architecture');
 INSERT INTO Tags VALUES (10, 'Tropical');
-INSERT INTO Tags VALUES (11, 'Landmark');
+INSERT INTO Tags VALUES (11, '');
 INSERT INTO Tags VALUES (12, 'Flower');
 INSERT INTO Tags VALUES (13, 'Nature');
 INSERT INTO Tags VALUES (14, '');
