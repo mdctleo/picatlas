@@ -4,9 +4,10 @@ CREATE TABLE Destinations (
 	Address char(255)
 );
 
-CREATE TABLE Destination_Tag
+CREATE TABLE Destination_Tag (
 	Name char(255) FOREIGN_KEY,
 	TagID smallint FOREIGN_KEY
+);
 
 CREATE TABLE Tags (
 	TagID smallint PRIMARY_KEY,
