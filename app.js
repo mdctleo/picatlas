@@ -1,11 +1,14 @@
 var createError = require('http-errors');
-var express = require('express');
+let express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mysql = require('mysql');
 var Promise = require('promise');
 
+import Impl from "./impl";
+let router = express.Router();
+let impl = new Impl(); //TODO
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -50,6 +53,45 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+
+/* GET home page. */
+app.get('/', function (req: any, res: any, next: any) {
+   res.render('index', { title: 'Express' });
+});
+
+// Random destination with given tag
+app.get('/getRandomDestination/:name', (req: any, res: any, next: any) => {
+   impl.selectRandomDest(req.params.name)
+       .then((result) => {
+           res.status(200).send(result);
+       })
+       .catch((err) => {
+           res.status(400).send(err);
+       });
+});
+
+// Random destination with given tag
+app.get('/getDestinationWithTag/:name', (req: any, res: any, next: any) => {
+   impl.selectRandomDestWithTag(req.params.name)
+       .then((result) => {
+           res.status(200).send(result);
+       })
+       .catch((err) => {
+           res.status(400).send(err);
+       });
+});
+
+// Final output
+app.get('/output', (req: any, res: any, next: any) => {
+   impl.getFinalOutput(req.params.name)
+       .then((result) => {
+           res.status(200).send(result);
+       })
+       .catch((err) => {
+           res.status(400).send(err);
+       });
 });
 
 module.exports = app;
