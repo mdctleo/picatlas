@@ -13,8 +13,8 @@ router.get('/getRandomDestination/', (req, res, next) => {
         res.status(400).send(err);
     });
 });
-router.get('/getDestinationWithTag/:name', (req, res, next) => {
-    picatlasImpl.selectRandomDestWithTag(req.body.tags)
+router.get('/selectPhaseTwoPictures', (req, res, next) => {
+    picatlasImpl.selectPhaseTwoPictures(req.body.tags)
         .then((result) => {
         res.status(200).send(result);
     })
@@ -22,4 +22,5 @@ router.get('/getDestinationWithTag/:name', (req, res, next) => {
         res.status(400).send(err);
     });
 });
+module.exports = router;
 //# sourceMappingURL=PicatlasRouter.js.map
