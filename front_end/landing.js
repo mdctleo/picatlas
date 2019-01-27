@@ -10,5 +10,29 @@ angular.module('myApp.landing', ['ngRoute'])
     }])
 
     .controller('LandingCtrl', [function() {
+        let vm = this;
+        vm.pictures = [];
+        (function initLanding() {
+            console.log("got here");
+            let url = "http://127.0.0.1:3000/selectPhaseOnePictures";
+            fetch(url, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "same-origin"
+            }).then(response => {
+
+                return response.json()
+            }).then(pictures => {
+                vm.pictures = pictures;
+
+            }).catch(error => {
+                console.log(error.message);
+            })
+
+        })();
+
+
 
     }]);
