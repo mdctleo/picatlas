@@ -89,6 +89,7 @@ export default class PicatlasImpl {
         });
     }
 
+    // Calculate the score of each image from user preferred tags, return the highest scoring picture
     public selectFinalPicture(tags: object): Promise<any> {
         let sql = '(SELECT IMG_PATH, TAG_ID FROM DESTINATION ' +
             'LEFT JOIN DESTINATION_TAG ON DESTINATION_TAG.DESTINATION_ID = DESTINATION.DESTINATION_ID ';
