@@ -2,6 +2,9 @@ import Database from "./Database";
 var mysql = require('mysql');
 
 export default class PicatlasImpl {
+    readonly URBAN_ID = '1';
+    readonly NATURE_ID = '3';
+
     private db: any;
     private con: any;
 
@@ -10,8 +13,18 @@ export default class PicatlasImpl {
         this.con = this.db.database;
     }
 
-    public selectRandomDest(): Promise<any> {
-        let sql = 'SELECT * FROM DESTINATION ORDER BY RAND() LIMIT 1';
+    // Select five random 'Nature' and five random 'Urban' image paths
+    public selectPhaseOnePictures(): Promise<any> {
+        let sql = '(SELECT IMG_PATH FROM DESTINATION ' +
+                  'LEFT JOIN DESTINATION_TAG ON DESTINATION_TAG.DESTINATION_ID = DESTINATION.DESTINATION_ID ' +
+                  'WHERE DESTINATION_TAG.TAG_ID = ' + this.URBAN_ID +
+                  ' ORDER BY RAND() LIMIT 5) ' +
+                  'UNION ' +
+                  '(SELECT IMG_PATH FROM DESTINATION ' +
+                  'LEFT JOIN DESTINATION_TAG ON DESTINATION_TAG.DESTINATION_ID = DESTINATION.DESTINATION_ID ' +
+                  'WHERE DESTINATION_TAG.TAG_ID = ' + this.NATURE_ID +
+                  ' ORDER BY RAND() LIMIT 5)';
+
         return new Promise((resolve, reject) => {
             this.con.query(sql, (err: any, result: any) => {
                 if (err) {
@@ -23,8 +36,22 @@ export default class PicatlasImpl {
         });
     }
 
-    public selectRandomDestWithTag(tags: string[]): Promise<any> {
-        let sql = 'SELECT * FROM DESTINATION WHERE dest-has-tag ORDER BY RAND() LIMIT 1';
+    // Select ten random image paths of the preferred category between 'Nature' and 'Urban'
+    public selectPhaseTwoPictures(tags: object): Promise<any> {
+        let preferredCategory = '';
+
+        // If Urban is preferred over Nature
+        if (tags[this.URBAN_ID] > tags[this.NATURE_ID]) {
+            preferredCategory = this.URBAN_ID;
+        } else { // If Nature is preferred over Urban
+            preferredCategory = this.NATURE_ID;
+        }
+
+        let sql = 'SELECT IMG_PATH FROM DESTINATION ' +
+                  'LEFT JOIN DESTINATION_TAG ON DESTINATION_TAG.DESTINATION_ID = DESTINATION.DESTINATION_ID ' +
+                  'WHERE DESTINATION_TAG.TAG_ID = ' + preferredCategory + ' ' +
+                  'ORDER BY RAND() LIMIT 10';
+
         return new Promise((resolve, reject) => {
             this.con.query(sql, (err: any, result: any) => {
                 if (err) {
