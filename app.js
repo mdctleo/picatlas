@@ -5,6 +5,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mysql = require('mysql');
 var Promise = require('promise');
+var bodyParser = require('body-parser');    // pull information from HTML POST (express4)
+
 
 import Impl from "./impl";
 let router = express.Router();
@@ -26,15 +28,15 @@ var corsOptions = {
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'pug');
 
-app.use(express.static('front_end'));
-
-
+app.use(express.static(path.join(__dirname, 'front_end')));
 app.use(cors(corsOptions));
+app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
+app.use(bodyParser.json());                                     // parse application/json
+app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
