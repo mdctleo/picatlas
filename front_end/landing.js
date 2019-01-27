@@ -9,7 +9,7 @@ angular.module('myApp.landing', ['ngRoute'])
         });
     }])
 
-    .controller('LandingCtrl', [function() {
+    .controller('LandingCtrl', ['$scope', function($scope) {
         let vm = this;
         vm.pictures = [];
         vm.currPic = "./img/destinations/alaska.jpg";
@@ -30,9 +30,9 @@ angular.module('myApp.landing', ['ngRoute'])
                 return response.json()
             }).then(pictures => {
                 vm.pictures = pictures;
-                vm.currPic = vm.pictures[0];
+                vm.currPic = Object.keys(vm.pictures)[0];
                 console.log(vm.currPic);
-
+                $scope.$apply();
             }).catch(error => {
                 console.log(error.message);
             })
