@@ -15,7 +15,7 @@ router.get('/getRandomDestination/', (req: any, res: any, next: any) => {
 });
 
 // Random destination with given tag
-router.get('/selectPhaseTwoPictures', (req: any, res: any, next: any) => {
+router.post('/selectPhaseTwoPictures', (req: any, res: any, next: any) => {
     picatlasImpl.selectPhaseTwoPictures(req.body.tags)
         .then((result) => {
             res.status(200).send(result);

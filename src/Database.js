@@ -5,9 +5,9 @@ class Database {
     constructor() {
         this.database = mysql_1.createPool({
             connectionLimit: 10,
-            host: "localhost",
+            host: "35.197.116.75",
             user: "root",
-            password: "root",
+            password: "dsmlLtzxlyFr3Hki",
             database: "picatlas",
             multipleStatements: true
         });
