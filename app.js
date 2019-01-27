@@ -6,12 +6,9 @@ var logger = require('morgan');
 const mysql = require('mysql');
 var Promise = require('promise');
 
-import Impl from "./impl";
 let router = express.Router();
-let impl = new Impl();
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var picatalasRouter = require('./src/PicatlasRouter');
 
 var app = express();
 
@@ -36,8 +33,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/', picatalasRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -57,41 +53,9 @@ app.use(function(err, req, res, next) {
 
 
 /* GET home page. */
-app.get('/', function (req: any, res: any, next: any) {
-   res.render('index', { title: 'Express' });
-});
+// app.get('/', function (req: any, res: any, next: any) {
+//    res.render('index', { title: 'Express' });
+// });
 
-// Random destination
-app.get('/getRandomDestination/', (req: any, res: any, next: any) => {
-   impl.selectRandomDest()
-       .then((result) => {
-           res.status(200).send(result);
-       })
-       .catch((err) => {
-           res.status(400).send(err);
-       });
-});
-
-// Random destination with given tag
-app.get('/getDestinationWithTag/:name', (req: any, res: any, next: any) => {
-   impl.selectRandomDestWithTag(req.params.name)
-       .then((result) => {
-           res.status(200).send(result);
-       })
-       .catch((err) => {
-           res.status(400).send(err);
-       });
-});
-
-// Final output
-app.get('/output', (req: any, res: any, next: any) => {
-   impl.getFinalOutput()
-       .then((result) => {
-           res.status(200).send(result);
-       })
-       .catch((err) => {
-           res.status(400).send(err);
-       });
-});
 
 module.exports = app;
