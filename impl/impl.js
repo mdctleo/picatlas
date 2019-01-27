@@ -39,7 +39,7 @@ export default class Impl {
     return new Promise(function (resolve, reject) => {
       let qry = "SELECT * FROM DESTINATION WHERE todo ORDER BY RAND() LIMIT 1"; //TODO
       setTimeout(function() {
-        con.query(qry, [name], (err, result) => {
+        con.query(qry, (err, result) => {
           if (err) {
             console.log(err);
             reject(err);
