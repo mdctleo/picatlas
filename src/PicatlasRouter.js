@@ -22,5 +22,14 @@ router.post('/selectPhaseTwoPictures', (req, res, next) => {
         res.status(400).send(err);
     });
 });
+router.post('/selectFinalPicture', (req, res, next) => {
+    picatlasImpl.selectFinalPicture(req.body.tags)
+        .then((result) => {
+        res.status(200).send(result);
+    })
+        .catch((err) => {
+        res.status(400).send(err);
+    });
+});
 module.exports = router;
 //# sourceMappingURL=PicatlasRouter.js.map
