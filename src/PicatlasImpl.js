@@ -13,12 +13,12 @@ class PicatlasImpl {
         let sql = '(SELECT IMG_PATH FROM DESTINATION ' +
             'LEFT JOIN DESTINATION_TAG ON DESTINATION_TAG.DESTINATION_ID = DESTINATION.DESTINATION_ID ' +
             'WHERE DESTINATION_TAG.TAG_ID = ' + this.URBAN_ID +
-            'ORDER BY RAND() LIMIT 5) ' +
+            ' ORDER BY RAND() LIMIT 5) ' +
             'UNION ' +
             '(SELECT IMG_PATH FROM DESTINATION ' +
             'LEFT JOIN DESTINATION_TAG ON DESTINATION_TAG.DESTINATION_ID = DESTINATION.DESTINATION_ID ' +
             'WHERE DESTINATION_TAG.TAG_ID = ' + this.NATURE_ID +
-            'ORDER BY RAND() LIMIT 5)';
+            ' ORDER BY RAND() LIMIT 5)';
         return new Promise((resolve, reject) => {
             this.con.query(sql, (err, result) => {
                 if (err) {
