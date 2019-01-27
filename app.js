@@ -8,7 +8,7 @@ var Promise = require('promise');
 
 import Impl from "./impl";
 let router = express.Router();
-let impl = new Impl(); //TODO
+let impl = new Impl();
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -61,9 +61,9 @@ app.get('/', function (req: any, res: any, next: any) {
    res.render('index', { title: 'Express' });
 });
 
-// Random destination with given tag
-app.get('/getRandomDestination/:name', (req: any, res: any, next: any) => {
-   impl.selectRandomDest(req.params.name)
+// Random destination
+app.get('/getRandomDestination/', (req: any, res: any, next: any) => {
+   impl.selectRandomDest()
        .then((result) => {
            res.status(200).send(result);
        })
@@ -85,7 +85,7 @@ app.get('/getDestinationWithTag/:name', (req: any, res: any, next: any) => {
 
 // Final output
 app.get('/output', (req: any, res: any, next: any) => {
-   impl.getFinalOutput(req.params.name)
+   impl.getFinalOutput()
        .then((result) => {
            res.status(200).send(result);
        })
