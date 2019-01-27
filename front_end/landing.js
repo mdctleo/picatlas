@@ -36,9 +36,7 @@ angular.module('myApp.landing', ['ngRoute'])
             }).catch(error => {
                 console.log(error.message);
             })
-
         })();
-
 
         function addTag() {
 
@@ -48,20 +46,20 @@ angular.module('myApp.landing', ['ngRoute'])
 
         }
 
-        function nextPic($event) {
-
+        function nextPic(keyCode) {
+            if (keyCode == 37) {
+                alert('Left was pressed');
+            }
+            else if (keyCode == 39) {
+                alert('Right was pressed');
+            }
         }
+
+
+        document.addEventListener('keydown', function(event) {
+            nextPic(event.keyCode);
+        }, true);
 
 
 
     }]);
-
-
-document.addEventListener('keydown', function(event) {
-    if (event.keyCode == 37) {
-        alert('Left was pressed');
-    }
-    else if (event.keyCode == 39) {
-        alert('Right was pressed');
-    }
-}, true);
