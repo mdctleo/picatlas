@@ -4,8 +4,8 @@ let express = require('express');
 let router = express.Router();
 let picatlasImpl = new PicatlasImpl();
 // Random destination
-router.get('/getRandomDestination/', (req: any, res: any, next: any) => {
-    picatlasImpl.selectRandomDest()
+router.get('/selectPhaseOnePictures/', (req: any, res: any, next: any) => {
+    picatlasImpl.selectPhaseOnePictures()
         .then((result) => {
             res.status(200).send(result);
         })
