@@ -5,6 +5,7 @@
   "scripts": {},
   "dependencies": {
     "angular": "^1.7.6",
+    "angular-route": "^1.7.6",
     "uikit": "^3.0.2"
   }
 }
