@@ -7,9 +7,6 @@ const mysql = require('mysql');
 var Promise = require('promise');
 var bodyParser = require('body-parser');    // pull information from HTML POST (express4)
 
-
-let router = express.Router();
-
 var picatalasRouter = require('./src/PicatlasRouter');
 
 var app = express();
