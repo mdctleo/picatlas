@@ -3,6 +3,7 @@ import PicatlasImpl from "./PicatlasImpl";
 let express = require('express');
 let router = express.Router();
 let picatlasImpl = new PicatlasImpl();
+
 // Random destination
 router.get('/selectPhaseOnePictures/', (req: any, res: any, next: any) => {
     picatlasImpl.selectPhaseOnePictures()
