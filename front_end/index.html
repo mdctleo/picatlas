@@ -1,13 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="myApp">
 <head>
     <meta charset="UTF-8">
     <title>PicAtlas</title>
     <script src="./node_modules/uikit/dist/js/uikit.js"></script>
     <script src="./node_modules/uikit/dist/js/uikit-icons.js"></script>
     <link rel="stylesheet" href="./node_modules/uikit/dist/css/uikit.css" />
+    <script src="./node_modules/angular/angular.js"></script>
+    <script src="app.js"></script>
 </head>
 <body>
-<p>Welcome to PicAtlas</p>
+<ul class="menu">
+    <li><a href="#!/landing">landing</a></li>
+    <li><a href="#!/result">result</a></li>
+</ul>
+
+
+<!--[if lt IE 7]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<div ng-view></div>
+<script src="node_modules/angular-route/angular-route.js"></script>
+
+<script src="app.js"></script>
+<script src="/landing.js"></script>
+<script src="/result.js"></script>
 </body>
 </html>
