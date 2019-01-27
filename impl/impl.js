@@ -54,7 +54,7 @@ export default class Impl {
 
 
 
-var con = mysql.createConnection({
+/*var con = mysql.createConnection({
   host: "localhost",
   user: "user",
   password: "password",
@@ -67,4 +67,4 @@ con.connect(function(err) {
   if (err) throw err;
   console.log(result);
   });
-});
+});*/
