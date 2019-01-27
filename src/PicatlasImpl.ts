@@ -89,29 +89,53 @@ export default class PicatlasImpl {
         });
     }
 
-    // public selectFinalPicture(tags: object): Promise<any> {
-    //     let sql =
-    //
-    //
-    //
-    //     return new Promise((resolve, reject) => {
-    //         this.con.query(sql, (err: any, result: any) => {
-    //             if (err) {
-    //                 reject(err);
-    //             } else {
-    //                 let images = {};
-    //
-    //                 result.forEach((element) => {
-    //                     images[element['IMG_PATH']] = [];
-    //                 });
-    //
-    //                 result.forEach((element) => {
-    //                     images[element['IMG_PATH']].push(element['TAG_ID']);
-    //                 });
-    //
-    //                 resolve(images);
-    //             }
-    //         })
-    //     });
-    // }
+    public selectFinalPicture(tags: object): Promise<any> {
+        let sql = '(SELECT IMG_PATH, TAG_ID FROM DESTINATION ' +
+            'LEFT JOIN DESTINATION_TAG ON DESTINATION_TAG.DESTINATION_ID = DESTINATION.DESTINATION_ID ';
+
+        return new Promise((resolve, reject) => {
+            this.con.query(sql, (err: any, result: any) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    let images = {};
+                    let imageScores = {};
+
+                    // Initialize each image's array of tags and score
+                    result.forEach((element) => {
+                        images[element['IMG_PATH']] = [];
+                        imageScores[element['IMG_PATH']] = 0;
+                    });
+
+                    // Collect each image's tags
+                    result.forEach((element) => {
+                        images[element['IMG_PATH']].push(element['TAG_ID']);
+                    });
+
+                    let maxImageKeyScore = 0;
+                    let maxScoreImage;
+
+                    // Go through each image's tags
+                    for (let imageKey in images) {
+                        let tags = images[imageKey];
+
+                        // Calculate the image's score
+                        let score = 0;
+                        for (let tagId of tags) {
+                            score += tags[tagId];
+                        }
+                        score /= tags.length;
+
+                        // Save the maximum score so far
+                        if (score > maxImageKeyScore) {
+                            maxScoreImage = imageKey;
+                        }
+                    }
+
+                    // Return image with highest score
+                    resolve(maxScoreImage);
+                }
+            })
+        });
+    }
 }

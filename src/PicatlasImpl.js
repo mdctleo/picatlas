@@ -72,6 +72,42 @@ class PicatlasImpl {
             });
         });
     }
+    selectFinalPicture(tags) {
+        let sql = '(SELECT IMG_PATH, TAG_ID FROM DESTINATION ' +
+            'LEFT JOIN DESTINATION_TAG ON DESTINATION_TAG.DESTINATION_ID = DESTINATION.DESTINATION_ID ';
+        return new Promise((resolve, reject) => {
+            this.con.query(sql, (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    let images = {};
+                    let imageScores = {};
+                    result.forEach((element) => {
+                        images[element['IMG_PATH']] = [];
+                        imageScores[element['IMG_PATH']] = 0;
+                    });
+                    result.forEach((element) => {
+                        images[element['IMG_PATH']].push(element['TAG_ID']);
+                    });
+                    let maxImageKeyScore = 0;
+                    let maxScoreImage;
+                    for (let imageKey in images) {
+                        let tags = images[imageKey];
+                        let score = 0;
+                        for (let tagId of tags) {
+                            score += tags[tagId];
+                        }
+                        score /= tags.length;
+                        if (score > maxImageKeyScore) {
+                            maxScoreImage = imageKey;
+                        }
+                    }
+                    resolve(maxScoreImage);
+                }
+            });
+        });
+    }
 }
 exports.default = PicatlasImpl;
 //# sourceMappingURL=PicatlasImpl.js.map
