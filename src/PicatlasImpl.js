@@ -10,22 +10,33 @@ class PicatlasImpl {
         this.con = this.db.database;
     }
     selectPhaseOnePictures() {
-        let sql = '(SELECT IMG_PATH FROM DESTINATION ' +
+        let sql = '(SELECT IMG_PATH, TAG_ID FROM DESTINATION ' +
             'LEFT JOIN DESTINATION_TAG ON DESTINATION_TAG.DESTINATION_ID = DESTINATION.DESTINATION_ID ' +
-            'WHERE DESTINATION_TAG.TAG_ID = ' + this.URBAN_ID +
-            ' ORDER BY RAND() LIMIT 5) ' +
+            'WHERE IMG_PATH IN (SELECT IMG_PATH FROM DESTINATION ' +
+            'LEFT JOIN DESTINATION_TAG ON DESTINATION_TAG.DESTINATION_ID = DESTINATION.DESTINATION_ID ' +
+            'WHERE DESTINATION_TAG.TAG_ID = ' + this.URBAN_ID + ') ' +
+            'ORDER BY RAND()) ' +
             'UNION ' +
-            '(SELECT IMG_PATH FROM DESTINATION ' +
+            '(SELECT IMG_PATH, TAG_ID FROM DESTINATION ' +
             'LEFT JOIN DESTINATION_TAG ON DESTINATION_TAG.DESTINATION_ID = DESTINATION.DESTINATION_ID ' +
-            'WHERE DESTINATION_TAG.TAG_ID = ' + this.NATURE_ID +
-            ' ORDER BY RAND() LIMIT 5)';
+            'WHERE IMG_PATH IN (SELECT IMG_PATH FROM DESTINATION ' +
+            'LEFT JOIN DESTINATION_TAG ON DESTINATION_TAG.DESTINATION_ID = DESTINATION.DESTINATION_ID ' +
+            'WHERE DESTINATION_TAG.TAG_ID = ' + this.NATURE_ID + ') ' +
+            'ORDER BY RAND())';
         return new Promise((resolve, reject) => {
             this.con.query(sql, (err, result) => {
                 if (err) {
                     reject(err);
                 }
                 else {
-                    resolve(result);
+                    let images = {};
+                    result.forEach((element) => {
+                        images[element['IMG_PATH']] = [];
+                    });
+                    result.forEach((element) => {
+                        images[element['IMG_PATH']].push(element['TAG_ID']);
+                    });
+                    resolve(images);
                 }
             });
         });
